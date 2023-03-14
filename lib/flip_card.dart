@@ -201,6 +201,16 @@ class FlipCardState extends State<FlipCard>
     });
   }
 
+  
+  void setCardShowFront(){
+    if(isFront) return;
+     setState(() {
+      isFront = true;
+      controller!.value = 0.0;
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final frontPositioning = widget.fill == Fill.fillFront ? _fill : _noop;
