@@ -113,8 +113,7 @@ class FlipCard extends StatefulWidget {
   }
 }
 
-class FlipCardState extends State<FlipCard>
-    with SingleTickerProviderStateMixin {
+class FlipCardState extends State<FlipCard> with SingleTickerProviderStateMixin {
   AnimationController? controller;
   Animation<double>? _frontRotation;
   Animation<double>? _backRotation;
@@ -134,8 +133,7 @@ class FlipCardState extends State<FlipCard>
     _frontRotation = TweenSequence(
       [
         TweenSequenceItem<double>(
-          tween: Tween(begin: 0.0, end: pi / 2)
-              .chain(CurveTween(curve: Curves.easeIn)),
+          tween: Tween(begin: 0.0, end: pi / 2).chain(CurveTween(curve: Curves.easeIn)),
           weight: 50.0,
         ),
         TweenSequenceItem<double>(
@@ -151,8 +149,7 @@ class FlipCardState extends State<FlipCard>
           weight: 50.0,
         ),
         TweenSequenceItem<double>(
-          tween: Tween(begin: -pi / 2, end: 0.0)
-              .chain(CurveTween(curve: Curves.easeOut)),
+          tween: Tween(begin: -pi / 2, end: 0.0).chain(CurveTween(curve: Curves.easeOut)),
           weight: 50.0,
         ),
       ],
@@ -184,6 +181,22 @@ class FlipCardState extends State<FlipCard>
       if (!mounted) return;
       setState(() => isFront = !isFrontBefore);
     });
+    return animation;
+  }
+
+  bool isOpen() {
+    return isFront;
+  }
+
+  Future<void> openCard() async {
+    if (isOpen()) return;
+    return toggleCard();
+  }
+
+  Future<void> closeCard() async {
+    if (isOpen()) {
+      return toggleCard();
+    }
   }
 
   /// Flip the card without playing an animation.
@@ -201,15 +214,13 @@ class FlipCardState extends State<FlipCard>
     });
   }
 
-  
-  void setCardShowFront(){
-    if(isFront) return;
-     setState(() {
+  void setCardShowFront() {
+    if (isFront) return;
+    setState(() {
       isFront = true;
       controller!.value = 0.0;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {

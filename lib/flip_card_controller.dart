@@ -20,6 +20,12 @@ class FlipCardController {
   /// If awaited, returns after animation completes.
   Future<void> toggleCard() async => await state?.toggleCard();
 
+  bool isOpen() => state?.isOpen() ?? false;
+
+  Future<void> openCard() async => await state?.openCard();
+
+  Future<void> closeCard() async => await state?.closeCard();
+
   /// Flip the card without playing an animation.
   /// This cancels any ongoing animation.
   void toggleCardWithoutAnimation() => state?.toggleCardWithoutAnimation();
@@ -32,10 +38,7 @@ class FlipCardController {
     assert(0 <= amount && amount <= 1);
 
     final target = state!.isFront ? amount : 1 - amount;
-    await controller
-        ?.animateTo(target, duration: duration, curve: curve ?? Curves.linear)
-        .asStream()
-        .first;
+    await controller?.animateTo(target, duration: duration, curve: curve ?? Curves.linear).asStream().first;
   }
 
   /// Triggers a flip animation that reverses after the duration
