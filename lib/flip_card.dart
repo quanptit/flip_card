@@ -185,7 +185,7 @@ class FlipCardState extends State<FlipCard> with SingleTickerProviderStateMixin 
   }
 
   bool isOpen() {
-    return isFront;
+    return !isFront;
   }
 
   Future<void> openCard() async {
